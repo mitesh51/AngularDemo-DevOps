@@ -1,0 +1,45 @@
+<div class="comp-header"> Welcome to Detail Component</div>
+
+<div class="row">
+    <div class="column" *ngFor="let img of allImages; let i = index; ">
+        <img src={{img.url}} (click)="openImageModal(i);" class="hover-shadow cursor img">
+        <div class="title-container">{{img.title}}</div>
+    </div>
+
+
+    <div id="myModal" class="modal" *ngIf="showModal">
+        <div class="image-wrapper">
+            <div class="numbertext">{{clickedImageNo}} / {{allImagesLength}}</div>
+
+            <span class="close cursor" (click)="closeModal()">&times;</span>
+
+            <div class="modal-content">
+                <div *ngFor="let img of allImages; let i = index; ">
+                    <div clas="row">
+                        <div class="mySlides">
+                            <img src={{img.url}} style="width:100%">
+                        </div>
+                    </div>
+                </div>
+
+                <a class="prev" (click)="prevNextSlides(-1)">&#10094;</a>
+                <a class="next" (click)="prevNextSlides(1)">&#10095;</a>
+
+                <div class="caption-container">
+                    <p id="caption"></p>
+                </div>
+                <div class="image-thumbnail-wrapper">
+                    <div class="column-detail">
+                        <div class="column-detail" *ngFor="let img of allImages; let i = index; ">
+                            <img class="demo cursor" src={{img.url}} style="width:100%" (click)="currentSlide(i)" alt="{{img.title}}">
+                        </div>
+                    </div>
+                    <div class="column-detail detail-wrapper">
+                        <h2 class="header-text">Lorem Ipsum </h2>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type
+                            specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
+                            passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                    </div>
+                </div>
+            </div>
+        </div>

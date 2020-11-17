@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Pod
+spec:
+  containers:  # list of containers that you want present for your build, you can define a default container in the Jenkinsfile
+    - name: maven
+      image: maven:3.6.3-jdk-8
+      command: ["tail", "-f", "/dev/null"]  # this or any command that is bascially a noop is required, this is so that you don't overwrite the entrypoint of the base container
+      imagePullPolicy: Always # use cache or pull image for agent
+      resources:  # limits the resources your build contaienr
+        requests:
+          memory: "1Gi"
+          cpu: "500m"
+        limits:
+          memory: "2Gi"
+          cpu: "1000m"
+    - name: docker
+      image: docker:latest
+      command: ["tail", "-f", "/dev/null"]
+      imagePullPolicy: Always
+      volumeMounts:
+        - name: docker
+          mountPath: /var/run/docker.sock # We use the k8s host docker engine
+    - name: node
+      image: node:11-alpine
+      command: ["tail", "-f", "/dev/null"]
+      imagePullPolicy: Always
+    - name: git-sync
+      image: k8s.gcr.io/git-sync:v3.1.5
+      args:
+        - "--ssh"
+        - "--repo=git@github.com:torvalds/linux"
+        - "--link=linux"
+        - "--branch=master"
+        - "--depth=1"
+      securityContext:
+        runAsUser: 65533 # git-sync user
+      volumeMounts:
+        - name: git-secret
+          mountPath: /etc/git-secret
+          readOnly: true
+
+  volumes:
+    - name: docker
+      hostPath:
+        path: /var/run/docker.sock
+    - name: git-secret
+      secret:
+        secretName: git-creds
+        defaultMode: 0400
