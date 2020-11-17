@@ -20,9 +20,7 @@ pipeline {
 		stage('UnitTests & Coverage') {
 			steps {
 				echo "Steps to execute Unit Tests"
-                sh 'npm install && npm run test'
-                junit 'TESTS-*.xml'
-                publishCoverage(adapters: [coberturaAdapter('coverage/cobertura-coverage.xml')], sourceFileResolver: sourceFiles('NEVER_STORE'))
+        sh 'npm install && npm run test'        
 			}		
 		}
 
@@ -30,6 +28,8 @@ pipeline {
 		stage('Build') {
 			steps {
 				echo "Steps to execute Build"
+				sh 'npm run build'
+				zip archive: true, dir: 'dist/Demo1', glob: '', zipFile: 'browser.zip'
 			}
 		}
 		stage('Docker Image') {
