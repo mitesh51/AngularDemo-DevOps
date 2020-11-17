@@ -14,7 +14,7 @@ spec:
       command: ["tail", "-f", "/dev/null"]
       imagePullPolicy: Always
     - name: chrome
-      image: garunski/alpine-chrome:latest
+      image: browserless/chrome
       command: ["tail", "-f", "/dev/null"]
       imagePullPolicy: Always
   volumes:
