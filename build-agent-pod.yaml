@@ -14,7 +14,7 @@ spec:
       command: ["tail", "-f", "/dev/null"]
       imagePullPolicy: Always
     - name: chrome
-      image: zenika/alpine-chrome
+      image: zenika/alpine-chrome:with-node
       command: ["tail", "-f", "/dev/null"]
       imagePullPolicy: Always
   volumes:
