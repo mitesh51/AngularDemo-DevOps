@@ -11,8 +11,8 @@ pipeline {
 		stage('Static Code Analysis') {
 
 			steps {
-			    container('maven') { 
-				    echo "Steps to execute SCA"
+			    container('node') { 
+                    echo "Steps to execute SCA"
 			    }
 			}
 		}
@@ -20,6 +20,9 @@ pipeline {
 		stage('UnitTests & Coverage') {
 			steps {
 				echo "Steps to execute Unit Tests"
+                sh 'npm install && npm run test'
+                junit 'TESTS-*.xml'
+                publishCoverage(adapters: [coberturaAdapter('coverage/cobertura-coverage.xml')], sourceFileResolver: sourceFiles('NEVER_STORE'))
 			}		
 		}
 
