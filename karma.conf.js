@@ -30,7 +30,7 @@ module.exports = function (config) {
       properties: {} 
     },
 
-    reporters: ['progress', 'mocha', 'junit'],
+    reporters: ['progress', 'junit'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
