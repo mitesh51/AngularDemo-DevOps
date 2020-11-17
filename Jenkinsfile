@@ -19,9 +19,11 @@ pipeline {
 		
 		stage('UnitTests & Coverage') {
 			steps {
-				echo "Steps to execute Unit Tests"
-        sh 'npm install && npm run test'        
-			}		
+        container('chrome') {
+				  echo "Steps to execute Unit Tests"
+          sh 'npm install && npm run test'        
+        }
+       }		
 		}
 
     
