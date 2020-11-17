@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "test": "ng test AngularDemo-DevOps --code-coverage --no-watch",
+    "test": "ng test Angular-Sample --code-coverage --no-watch",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
