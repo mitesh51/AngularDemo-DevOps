@@ -24,26 +24,7 @@ spec:
       image: node:11-alpine
       command: ["tail", "-f", "/dev/null"]
       imagePullPolicy: Always
-    - name: git-sync
-      image: k8s.gcr.io/git-sync:v3.1.5
-      args:
-        - "--ssh"
-        - "--repo=git@github.com:torvalds/linux"
-        - "--link=linux"
-        - "--branch=master"
-        - "--depth=1"
-      securityContext:
-        runAsUser: 65533 # git-sync user
-      volumeMounts:
-        - name: git-secret
-          mountPath: /etc/git-secret
-          readOnly: true
-
   volumes:
     - name: docker
       hostPath:
         path: /var/run/docker.sock
-    - name: git-secret
-      secret:
-        secretName: git-creds
-        defaultMode: 0400
