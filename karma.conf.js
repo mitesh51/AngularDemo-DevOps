@@ -40,7 +40,7 @@ customLaunchers: {
  MyChromeHeadless: {
     base: 'ChromeHeadless',
     flags: [
-      '--no-sandbox'
+      '--no-sandbox', '--remote-debugging-port=9222', '--disable-gpu', '--disable-gpu'
     ]
   }
 },
