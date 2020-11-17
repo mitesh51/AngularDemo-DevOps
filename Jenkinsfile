@@ -23,7 +23,7 @@ pipeline {
 				  echo "Steps to execute Unit Tests"
           sh 'npm install && npm install karma-junit-reporter --save-dev && npm run test --progress false --watch false'
           junit 'TESTS-*.xml'
-          publishCoverage(adapters: [coberturaAdapter('coverage/cobertura-coverage.xml')], sourceFileResolver: sourceFiles('NEVER_STORE'))
+          publishCoverage(adapters: [coberturaAdapter('coverage/Demo1/cobertura-coverage.xml')], sourceFileResolver: sourceFiles('NEVER_STORE'))
         }
        }		
 		}
