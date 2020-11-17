@@ -35,7 +35,7 @@ customLaunchers: {
     ]
   }
 },
-    singleRun: false,
+    singleRun: true,
     restartOnFileChange: true
   });
 };
