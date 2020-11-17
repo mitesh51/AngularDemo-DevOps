@@ -21,7 +21,9 @@ pipeline {
 			steps {
         container('chrome') {
 				  echo "Steps to execute Unit Tests"
-          sh 'npm install && npm install karma-junit-reporter --save-dev && npm run test'        
+          sh 'npm install && npm install karma-junit-reporter --save-dev && npm run test'
+          junit 'TESTS-*.xml'
+          publishCoverage(adapters: [coberturaAdapter('coverage/cobertura-coverage.xml')], sourceFileResolver: sourceFiles('NEVER_STORE'))
         }
        }		
 		}
