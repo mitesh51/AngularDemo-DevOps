@@ -15,7 +15,7 @@ spec:
      serviceAccountName: jenkins
      containers:
         - name: angular-demo
-          image: mitesh51/angular-demo:0.1 
+          image: mitesh51/angular-demo:0.2
  replicas: 1
  
  selector: 
