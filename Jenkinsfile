@@ -8,34 +8,11 @@ pipeline {
 		}
 	} 
 	stages {
-		stage('Build') {
-			steps {
-				echo "Steps to execute Build"
-				sh 'npm install && npm run build'
-				zip archive: true, dir: 'dist/Demo1', glob: '', zipFile: 'browser.zip'
-				stash(includes: 'browser.zip', name: 'dist')
-			}
-		}
-		stage('Docker Image') {
-			steps {
-				container('docker') { 
-				    echo "Steps to Build Docker Image"
-            		unstash 'dist'
-                    sh 'chmod 755 browser.zip'	
-                    unzip(dir: 'dist/browser', zipFile: 'browser.zip')
-          sh 'ls -l'
-					sh 'docker image build -t mitesh51/angular-demo:0.2 .'
-					withCredentials([usernamePassword(credentialsId: 'docker-login', passwordVariable: 'password', usernameVariable: 'uname')]) {
-					    sh 'docker login -u=$uname -p=$password'
-                    }
-					sh 'docker push mitesh51/angular-demo:0.2'
-				}
 		
-			}
-		}
  		stage('EKS-Deployment') {
 			steps {
 				echo "Steps to execute EKS Deployment"
+        kubernetesDeploy configs: 'eks-deployment.yaml', kubeConfig: [path: ''], kubeconfigId: 'eks-kubeconfig', secretName: '', ssh: [sshCredentialsId: '*', sshServer: ''], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
 			}
 		}
 	}
