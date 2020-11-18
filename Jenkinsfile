@@ -67,7 +67,7 @@ pipeline {
 	post {
 		always{
 			junit 'TESTS-*.xml'
-			publishCoverage(adapters: [coberturaAdapter('coverage/Demo1/cobertura-coverage.xml')], sourceFileResolver: sourceFiles('NEVER_STORE'))
+			publishCoverage adapters: [coberturaAdapter(path: 'coverage/Demo1/cobertura-coverage.xml', thresholds: [[failUnhealthy: true, thresholdTarget: 'Line', unhealthyThreshold: 30.0, unstableThreshold: 60.0]])], failNoReports: true, failUnhealthy: true, failUnstable: true, sourceFileResolver: sourceFiles('NEVER_STORE')
 		}
 	}
 }
