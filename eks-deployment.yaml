@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: angular-demo-deployment
+ namespace: jenkins
+ labels:
+    app: angular-demo-app
+spec:
+ template:
+    metadata:
+     name: angular-demo-pod
+     labels:
+        app: angular-demo
+    spec:
+     serviceAccountName: jenkins
+     containers:
+        - name: angular-demo
+          image: mitesh51/angular-demo:0.1 
+ replicas: 1
+ 
+ selector: 
+    matchLabels:
+        app: angular-demo
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: angular-demo-service
+ namespace: jenkins
+ labels:
+    app: angular-demo
+spec:
+ selector: 
+    app: angular-demo
+ ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+ type: LoadBalancer
