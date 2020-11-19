@@ -56,6 +56,11 @@ pipeline {
 		
 			}
 		}		
+		stage('anchore') {
+			steps {
+                anchore bailOnFail: false, bailOnPluginFail: false, name: 'anchore_images'
+			}
+		}
  		stage('EKS-Deployment') {
 			steps {
 				echo "Steps to execute EKS Deployment"
